@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { LoadingBarProvider } from './Context'
-import './index.scss'
+import './index.css'
 
 export const LoadingBar = (props) => {
   
