@@ -1,20 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-const DEFAULT_STATES = {show: true}
+const DEFAULT_STATES = {}
 
 export const LoadingBarContext = React.createContext(DEFAULT_STATES)
 
 export const LoadingBarProvider = (props) => {
-  const [show, setShow] = useState(true)
-  
-  const onProgressDone = () => {
-    console.log('done!')
-  }
+  const [progress, setProgress] = useState(0)
+  const [show, setShow] = useState(false)
+
+  useEffect(() => {
+    if (progress && progress < 100 && progress >= 0) {
+      setShow(true)
+    } else {
+      setShow(false)
+    }
+  },[progress])
 
   return (
     <LoadingBarContext.Provider
       value={{
-        onProgressDone
+        progress,
+        setProgress,
+        show
       }}
     >
     {props.children}

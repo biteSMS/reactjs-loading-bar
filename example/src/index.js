@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext, useEffect } from 'react'
 import ReactDOM from 'react-dom'
 import { LoadingBar, LoadingBarContext } from '../../src'
 
@@ -10,9 +10,18 @@ const App = () => {
   )
 }
 
-const Child = () => {
-  const {onProgressDone} = useContext(LoadingBarContext)
-  onProgressDone()
+const Child = (props) => {
+  const { progress, setProgress } = useContext(LoadingBarContext)
+
+  useEffect(() => {
+    let timer = setInterval(() => {
+      setProgress(progress => progress + 3)
+    }, 200)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
+
   return (<div>child</div>)
 }
 
