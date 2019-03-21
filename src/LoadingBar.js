@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useRef } from 'react'
 import ReactDOM from 'react-dom'
 import { LoadingBarProvider, LoadingBarContext } from './Context'
 import './index.css'
@@ -17,8 +17,12 @@ export const LoadingBar = (props) => {
 }
 
 const Portal = (props) => {
-  const el = document.createElement('div')
-  // const {show} = useContext(LoadingBarContext)
+  const elRef = useRef(null)
+  if (!elRef.current) {
+    elRef.current = document.createElement('div')
+  }
+  const el = elRef.current
+  
   useEffect(() => {
     document.body.appendChild(el)
     return () => {
@@ -33,7 +37,7 @@ const Portal = (props) => {
 }
 
 const ProgressBar = () => {
-  const {progress} = useContext(LoadingBarContext)
+  const { progress } = useContext(LoadingBarContext)
 
   return (
     <div
